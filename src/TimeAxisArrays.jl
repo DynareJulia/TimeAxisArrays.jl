@@ -45,7 +45,6 @@ Tables.getcolumn(TA::AbstractTimeAxisArray, ::Type{T}, col::Int, nm::Symbol) whe
 Tables.getcolumn(TA::AbstractTimeAxisArray, nm::Symbol) = (nm == :Periods) ? format.(TA.data.axes[1].val) : TA.data.data[:, nm]
 Tables.getcolumn(TA::AbstractTimeAxisArray, i::Int) = (i == 1) ? format.(TA.data.axes[1].val) : TA.data.data[:, i]
 function Tables.columnnames(TA::AbstractTimeAxisArray)
-    @show TA.data
     return vcat(:Periods, TA.data.axes[2].val)    
 end
 
@@ -190,7 +189,6 @@ format(p) = string(p)
 
 function Base.show(io::IO, TA::TimeAxisArray)
     aa = TA.data
-    @show aa
     pretty_table(aa, nosubheader=true)
 end
 
@@ -207,7 +205,6 @@ Base.getindex(TA::AbstractTimeAxisArray{T}, idx::ClosedInterval{<: Instant}) whe
 Base.getindex(TA::AbstractTimeAxisArray{T}, idx1::D, idx2::Symbol) where {T, D <: Instant} = TimeAxisArray(hcat(TA.data[idx1, idx2]), [idx1], [idx2])
 Base.getindex(TA::AbstractTimeAxisArray{T}, idx::CartesianIndex) where T = getindex(TA.data, idx)
 function Base.getindex(TA::AbstractTimeAxisArray{T}, idx1...) where T
-    @show idx1
     return TimeAxisArray{T}(view(TA.data, idx1...))
 end
 

@@ -22,4 +22,4 @@ ta2 = TimeAxisArray(rand(4,3), period(Week, 1935, 2):period(Week, 1935, 5), [:a,
 @test ta2[WeekSE(1935, 3), :c].data.data[1,1] == ta2.data[2, 3]
 
 @test all(log.(ta1).data ≈ log.(ta1.data))
-@test ta1 + ta1 .== 2*ta1
+@test ta1 + ta1 == 2*ta1
